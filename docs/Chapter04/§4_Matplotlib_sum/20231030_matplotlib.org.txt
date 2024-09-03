@@ -1,0 +1,6 @@
+org:		https://matplotlib.org/
+
+cheatsheets:	https://matplotlib.org/cheatsheets/
+
+Examples:	https://matplotlib.org/stable/gallery/index.html
+
