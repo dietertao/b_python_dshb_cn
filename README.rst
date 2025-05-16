@@ -1,6 +1,5 @@
 ===============
 b_python_dshb_cn
-test2 nihao
 ===============
 
 
