@@ -1,6 +1,7 @@
 # b01_4_2_square().py
 # test hallo world
 # test 
+# test
 def square(x):
     "square a number"
     return x*x
