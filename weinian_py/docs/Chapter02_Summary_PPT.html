@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter02 NumPy实战项目总结报告PPT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .slideshow-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .slide {
+            display: none;
+            background: white;
+            width: 95%;
+            max-width: 1200px;
+            height: 85%;
+            max-height: 720px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 20px 35px 150px 35px;
+            overflow-y: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            box-sizing: border-box;
+        }
+        
+        .slide.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 8px;
+        }
+        
+        h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin-bottom: 12px;
+            border-left: 5px solid #e74c3c;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #7f8c8d;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            margin-top: 15px;
+        }
+        
+        p, li {
+            font-size: 1.0em;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 12px 0;
+            overflow-x: auto;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.9);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .cover-slide {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px !important;
+            overflow-y: auto;
+        }
+        
+        .cover-title {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #3498db, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cover-subtitle {
+            font-size: 1.5em;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #3498db;
+            transition: width 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .project-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 12px 0;
+            border-left: 5px solid #3498db;
+        }
+        
+        .step-indicator {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-counter" id="slideCounter">1 / 14</div>
+    
+    <div class="slideshow-container">
+        <!-- 幻灯片1: 封面 -->
+        <div class="slide active cover-slide">
+            <h1 class="cover-title">Chapter02 NumPy实战项目</h1>
+            <p class="cover-subtitle">数据科学流程框架与NumPy深度应用</p>
+            <p class="cover-subtitle">Python数据分析实践指南</p>
+            <br>
+            <p><strong>作者：</strong> 闫小峰 (Python For Beginner学习社群)</p>
+            <p><strong>项目：</strong> ds_project_np01 & ds_project_np02</p>
+            <p><strong>日期：</strong> 2025年7月20日</p>
+        </div>
+
+        <!-- 幻灯片2: 目录概览 -->
+        <div class="slide">
+            <h1>Chapter02 目录概览</h1>
+            <h2>本章核心内容模块</h2>
+            <ul>
+                <li><span class="emoji">🎯</span><strong>项目1: ds_project_np01</strong> - 销售数据分析项目</li>
+                <li><span class="emoji">🏠</span><strong>项目2: ds_project_np02</strong> - 房地产数据分析项目</li>
+                <li><span class="emoji">📊</span><strong>NumPy基础实战</strong> - np_basics核心操作</li>
+                <li><span class="emoji">🔧</span><strong>工具库开发</strong> - pybds_lib自定义函数</li>
+                <li><span class="emoji">📈</span><strong>数据可视化</strong> - Matplotlib深度应用</li>
+                <li><span class="emoji">🔄</span><strong>完整流程实践</strong> - 数据科学5步骤落地</li>
+            </ul>
+        </div>
+
+        <!-- 幻灯片3: 数据科学流程框架回顾 -->
+        <div class="slide">
+            <h1>数据科学流程框架回顾</h1>
+            <h2>标准5步流程在实战中的应用</h2>
+            
+            <div class="highlight">
+                <h3>🔄 数据科学通用流程：</h3>
+                <ul>
+                    <li><span class="step-indicator">0</span><strong>业务理解 (Understanding)</strong></li>
+                    <li><span class="step-indicator">1</span><strong>数据获取和理解 (Data Acquisition & Understanding)</strong></li>
+                    <li><span class="step-indicator">2</span><strong>数据预处理 (Data Preparation)</strong></li>
+                    <li><span class="step-indicator">3</span><strong>数据分析和挖掘 (Data Analysis & Mining)</strong></li>
+                    <li><span class="step-indicator">4</span><strong>模型评估 (Model Evaluation)</strong></li>
+                    <li><span class="step-indicator">5</span><strong>业务理解深化 (Business Intelligence)</strong></li>
+                </ul>
+            </div>
+
+            <h3>🎯 Chapter02实践重点：</h3>
+            <ul>
+                <li>NumPy数组的深度操作与管理</li>
+                <li>数据清理和预处理技术</li>
+                <li>统计分析与可视化</li>
+                <li>自定义函数库的构建</li>
+            </ul>
+        </div>
+
+        <!-- 幻灯片4: 项目1 - ds_project_np01概览 -->
+        <div class="slide">
+            <h1>项目1: ds_project_np01</h1>
+            <h2>销售数据分析项目</h2>
+            
+            <div class="project-card">
+                <h3>🎯 项目目标：</h3>
+                <ul>
+                    <li><strong>岗位基本操作训练：</strong> 学习+练习NumPy基础结构和操作</li>
+                    <li><strong>流程框架实践：</strong> 跟练数据分析全栈流程框架</li>
+                    <li><strong>技能建设：</strong> 掌握np.array基本认知和管理</li>
+                    <li><strong>可视化入门：</strong> 数据可视化基础框架认知</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>📊 数据结构：</h3>
+                <ul>
+                    <li><strong>时间戳：</strong> 2025年5月数据，1000个样本点</li>
+                    <li><strong>销售额：</strong> 模拟销售数据，包含异常值和缺失值</li>
+                    <li><strong>用户年龄：</strong> 18-70岁范围</li>
+                    <li><strong>地区编码：</strong> 1-5区域分布</li>
+                </ul>
+            </div>
+
+            <h3>🔧 技术栈：</h3>
+            <p>NumPy + Matplotlib + 自定义统计函数</p>
+        </div>
+
+        <!-- 幻灯片5: 项目1 - 核心技术实现 -->
+        <div class="slide">
+            <h1>项目1: 核心技术实现</h1>
+            <h2>NumPy数据处理技术</h2>
+            
+            <h3>📊 数据生成与模拟：</h3>
+            <div class="code-block">
+# 设置随机种子保证可复现性
+np.random.seed(42)
+
+# 生成1000条模拟数据
+n_samples = 1000
+timestamps = np.arange("2025-05-01", "2025-05-31", dtype='datetime64[m]')[:n_samples]
+sales = np.abs(np.random.randn(n_samples)*500+1000)
+ages = np.random.randint(18, 70, size=n_samples)
+regions = np.random.randint(1, 5, size=n_samples)
+            </div>
+
+            <h3>🧹 数据清理技术：</h3>
+            <div class="code-block">
+# 添加异常值和缺失值
+sales += np.random.randint(0,3000,n_samples) * 0.15
+sales[np.random.choice(n_samples, size=int(n_samples*0.05), replace=False)] = np.nan
+
+# 缺失值处理
+mask = np.random.rand(n_samples) < 0.05
+sales = np.where(mask, np.nan, sales)
+sales = np.round(np.where(np.isnan(sales), np.nanmean(sales), sales), decimals=2)
+            </div>
+        </div>
+
+        <!-- 幻灯片6: 项目1 - 统计分析函数 -->
+        <div class="slide">
+            <h1>项目1: 统计分析函数</h1>
+            <h2>自定义describe_array函数</h2>
+            
+            <div class="highlight">
+                <h3>🔍 函数功能设计：</h3>
+                <ul>
+                    <li><strong>基本信息：</strong> 大小、数据类型、形状、内存使用</li>
+                    <li><strong>数据质量：</strong> 缺失值数量、有效值数量</li>
+                    <li><strong>统计指标：</strong> 均值、中值、最值、极差</li>
+                    <li><strong>分布特征：</strong> 标准差、方差、偏度、峰度</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+def describe_array(arr):
+    """计算数组的基本统计信息"""
+    if not isinstance(arr, np.ndarray):
+        raise ValueError("Input must be a numpy array.")
+    
+    summary = {}
+    summary["Size"] = arr.size
+    summary['dtype'] = arr.dtype
+    summary['Shape'] = arr.shape
+    summary['NaN_count'] = np.isnan(arr).sum()
+    summary['Mean'] = np.nanmean(arr)
+    summary['Std'] = np.nanstd(arr)
+    # ... 更多统计指标
+    
+    return summary
+            </div>
+
+            <h3>💡 技术亮点：</h3>
+            <ul>
+                <li>处理包含NaN值的数组（使用np.nan*函数）</li>
+                <li>完整的统计描述（包括偏度和峰度）</li>
+                <li>错误处理和输入验证</li>
+            </ul>
+        </div>
+
+        <!-- 幻灯片7: 项目2 - ds_project_np02概览 -->
+        <div class="slide">
+            <h1>项目2: ds_project_np02</h1>
+            <h2>房地产数据分析项目</h2>
+            
+            <div class="project-card">
+                <h3>🏠 项目背景：</h3>
+                <ul>
+                    <li><strong>数据来源：</strong> ImmoScout24, Kaggle德国房地产数据集</li>
+                    <li><strong>分析范围：</strong> 德国地区房地产市场数据</li>
+                    <li><strong>数据结构：</strong> 区域性np.array数组类型数据</li>
+                    <li><strong>分析维度：</strong> 价格、地区、房型等多维度分析</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>🎯 进阶目标：</h3>
+                <ul>
+                    <li><strong>高级数据处理：</strong> 复杂数据结构的NumPy操作</li>
+                    <li><strong>可视化深化：</strong> Matplotlib面向对象API深度应用</li>
+                    <li><strong>中文支持：</strong> 图表中文显示配置</li>
+                    <li><strong>模块化开发：</strong> 使用pybds_lib自定义工具库</li>
+                </ul>
+            </div>
+
+            <h3>🔧 技术栈升级：</h3>
+            <p>NumPy + Pandas + Matplotlib (OOP API) + 自定义工具库</p>
+        </div>
+
+        <!-- 幻灯片8: 项目2 - 环境配置与国际化 -->
+        <div class="slide">
+            <h1>项目2: 环境配置与国际化</h1>
+            <h2>高级环境设置技术</h2>
+            
+            <h3>🌐 中文字体配置：</h3>
+            <div class="code-block">
+# 导入matplotlib中文字体配置
+from matplotlib import rcParams
+
+# 设置中文字体，支持中文标题和标签显示
+rcParams['font.family'] = 'SimHei'  # 或 'Microsoft YaHei'
+
+# 解决负号显示问题
+rcParams['axes.unicode_minus'] = False
+            </div>
+
+            <div class="highlight">
+                <h3>📦 模块化导入：</h3>
+                <ul>
+                    <li><strong>标准库：</strong> numpy, pandas, matplotlib</li>
+                    <li><strong>自定义库：</strong> pybds_lib (项目专用工具函数)</li>
+                    <li><strong>环境配置：</strong> 警告抑制、自动重载、内嵌图表</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+import pybds_lib as pds  # 自定义工具库
+
+%load_ext autoreload   # 自动重载扩展
+%autoreload 2          # 监控所有模块变化
+%matplotlib inline     # 内嵌图表显示
+            </div>
+
+            <h3>🎯 配置优势：</h3>
+            <ul>
+                <li>支持中文数据标签和图表标题</li>
+                <li>开发时模块自动更新，无需重启kernel</li>
+                <li>图表直接在notebook中显示</li>
+            </ul>
+        </div>
+
+        <!-- 幻灯片9: NumPy基础实战 (np_basics) -->
+        <div class="slide">
+            <h1>NumPy基础实战 (np_basics)</h1>
+            <h2>核心操作技能全覆盖</h2>
+            
+            <div class="highlight">
+                <h3>📚 学习内容结构：</h3>
+                <ul>
+                    <li><span class="emoji">🔧</span><strong>数组创建与管理：</strong> 创建、查询、索引、切片</li>
+                    <li><span class="emoji">⚡</span><strong>数组运算：</strong> 向量化操作、广播机制</li>
+                    <li><span class="emoji">📊</span><strong>统计分析：</strong> 描述性统计、聚合操作</li>
+                    <li><span class="emoji">🎨</span><strong>数据可视化：</strong> 基础图表制作</li>
+                </ul>
+            </div>
+
+            <h3>🔑 核心技能点：</h3>
+            <ul>
+                <li><strong>数组属性管理：</strong> shape, dtype, size, ndim查询</li>
+                <li><strong>索引和切片：</strong> 多维数组的灵活访问</li>
+                <li><strong>数学运算：</strong> 元素级运算、线性代数操作</li>
+                <li><strong>数据处理：</strong> 排序、搜索、条件筛选</li>
+                <li><strong>统计计算：</strong> 均值、标准差、分位数等</li>
+            </ul>
+
+            <div class="project-card">
+                <h3>💡 实战亮点：</h3>
+                <p>通过89个代码单元的系统化练习，从基础操作到高级应用，全面掌握NumPy核心技能。</p>
+            </div>
+        </div>
+
+        <!-- 幻灯片10: 工具库开发 (pybds_lib) -->
+        <div class="slide">
+            <h1>工具库开发 (pybds_lib)</h1>
+            <h2>模块化编程最佳实践</h2>
+            
+            <div class="highlight">
+                <h3>🛠️ describe_array函数特性：</h3>
+                <ul>
+                    <li><strong>输入验证：</strong> 类型检查和错误处理</li>
+                    <li><strong>全面统计：</strong> 15+个统计指标</li>
+                    <li><strong>NaN处理：</strong> 专门处理缺失值的统计函数</li>
+                    <li><strong>内存分析：</strong> 数组内存使用情况</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+def describe_array(arr):
+    """计算Numpy数组的基本统计信息"""
+    summary = {}
+    
+    # 基本信息
+    summary["Size"] = arr.size
+    summary['dtype'] = arr.dtype
+    summary['Shape'] = arr.shape
+    summary['Memory_usage'] = arr.nbytes
+    
+    # 数据质量
+    summary['NaN_count'] = np.isnan(arr).sum()
+    summary['finite_count'] = np.isfinite(arr).sum()
+    
+    # 统计指标 (使用nan安全函数)
+    summary['Mean'] = np.nanmean(arr)
+    summary['Median'] = np.nanmedian(arr)
+    summary['Std'] = np.nanstd(arr)
+    summary['Skewness'] = np.nanmean((arr-np.nanmean(arr))**3 / (np.nanstd(arr)**3))
+    
+    return summary
+            </div>
+
+            <h3>🎯 设计理念：</h3>
+            <ul>
+                <li>可重用性：跨项目通用的统计分析工具</li>
+                <li>健壮性：完善的错误处理和边界情况处理</li>
+                <li>扩展性：易于添加新的统计指标</li>
+            </ul>
+        </div>
+
+        <!-- 幻灯片11: 数据可视化技术 -->
+        <div class="slide">
+            <h1>数据可视化技术</h1>
+            <h2>Matplotlib深度应用</h2>
+            
+            <div class="highlight">
+                <h3>📊 可视化技术栈：</h3>
+                <ul>
+                    <li><strong>基础图表：</strong> 线图、散点图、柱状图、直方图</li>
+                    <li><strong>高级图表：</strong> 子图布局、多轴图表、3D可视化</li>
+                    <li><strong>样式定制：</strong> 颜色、字体、标签、图例</li>
+                    <li><strong>交互功能：</strong> 图表保存、动态更新</li>
+                </ul>
+            </div>
+
+            <h3>🎨 面向对象API使用：</h3>
+            <div class="code-block">
+# 面向对象的绘图方式
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# 绘制多个数据系列
+ax.plot(x, y1, label='数据系列1', linewidth=2)
+ax.plot(x, y2, label='数据系列2', linestyle='--')
+
+# 定制图表
+ax.set_xlabel('X轴标签')
+ax.set_ylabel('Y轴标签')
+ax.set_title('图表标题')
+ax.legend()
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+            </div>
+
+            <h3>💡 技术亮点：</h3>
+            <ul>
+                <li>中文字体配置和显示</li>
+                <li>复杂多子图布局设计</li>
+                <li>数据驱动的动态图表生成</li>
+                <li>图表样式的统一管理</li>
+            </ul>
+        </div>
+
+        <!-- 幻灯片12: 实战项目技术总结 -->
+        <div class="slide">
+            <h1>实战项目技术总结</h1>
+            <h2>核心技能与最佳实践</h2>
+            
+            <div class="highlight">
+                <h3>🎯 NumPy核心技能掌握：</h3>
+                <ul>
+                    <li><strong>数组创建：</strong> 多种创建方式，适应不同数据源</li>
+                    <li><strong>数据清理：</strong> 缺失值处理、异常值检测</li>
+                    <li><strong>统计分析：</strong> 描述性统计、分布分析</li>
+                    <li><strong>向量化编程：</strong> 避免循环，提升性能</li>
+                </ul>
+            </div>
+
+            <div class="project-card">
+                <h3>📊 数据科学流程实践：</h3>
+                <ul>
+                    <li><span class="step-indicator">1</span>业务理解：明确分析目标和技术要求</li>
+                    <li><span class="step-indicator">2</span>数据获取：模拟真实数据生成过程</li>
+                    <li><span class="step-indicator">3</span>数据预处理：清理、转换、质量检查</li>
+                    <li><span class="step-indicator">4</span>分析挖掘：统计分析、模式发现</li>
+                    <li><span class="step-indicator">5</span>结果呈现：可视化、报告生成</li>
+                </ul>
+            </div>
+
+            <h3>🛠️ 工程化最佳实践：</h3>
+            <ul>
+                <li><strong>模块化开发：</strong> 自定义工具库pybds_lib</li>
+                <li><strong>代码复用：</strong> 通用函数和模板</li>
+                <li><strong>环境管理：</strong> 依赖管理和配置标准化</li>
+                <li><strong>文档化：</strong> 函数文档和使用说明</li>
+            </ul>
+        </div>
+
+        <!-- 幻灯片13: 学习成果与进阶方向 -->
+        <div class="slide">
+            <h1>学习成果与进阶方向</h1>
+            <h2>从基础到专业的进化路径</h2>
+            
+            <div class="highlight">
+                <h3>✅ Chapter02 学习成果：</h3>
+                <ul>
+                    <li><strong>技术能力：</strong> 熟练掌握NumPy数组操作和分析</li>
+                    <li><strong>项目经验：</strong> 完成2个完整的数据分析项目</li>
+                    <li><strong>工具开发：</strong> 构建可重用的分析工具库</li>
+                    <li><strong>可视化：</strong> 掌握Matplotlib高级绘图技术</li>
+                    <li><strong>流程化：</strong> 建立标准化的数据分析工作流</li>
+                </ul>
+            </div>
+
+            <div class="project-card">
+                <h3>🚀 下一步进阶方向：</h3>
+                <ul>
+                    <li><span class="emoji">🐼</span><strong>Pandas进阶：</strong> DataFrame操作、数据清洗、合并连接</li>
+                    <li><span class="emoji">📊</span><strong>高级可视化：</strong> Seaborn、Plotly交互式图表</li>
+                    <li><span class="emoji">🤖</span><strong>机器学习：</strong> Scikit-learn、模型训练与评估</li>
+                    <li><span class="emoji">📈</span><strong>时间序列：</strong> 金融数据、预测分析</li>
+                    <li><span class="emoji">🌐</span><strong>数据获取：</strong> API调用、网络爬虫、数据库操作</li>
+                </ul>
+            </div>
+
+            <h3>💡 持续学习建议：</h3>
+            <ul>
+                <li>通过实际项目巩固技能</li>
+                <li>关注数据科学社区最新动态</li>
+                <li>参与开源项目贡献代码</li>
+                <li>建立个人数据科学作品集</li>
+            </ul>
+        </div>
+
+        <!-- 幻灯片14: 感谢页面 -->
+        <div class="slide cover-slide">
+            <h1 class="cover-title">谢谢聆听！</h1>
+            
+            <div style="text-align: left; margin-top: 40px;">
+                <h3>项目信息：</h3>
+                <ul>
+                    <li><span class="emoji">📚</span>课程来源：Python For Beginner学习社群</li>
+                    <li><span class="emoji">👨‍🏫</span>主讲师：闫小峰</li>
+                    <li><span class="emoji">📅</span>项目更新：2025-07-08</li>
+                    <li><span class="emoji">🔗</span>项目文件：ds_project_np01、ds_project_np02、np_basics</li>
+                </ul>
+
+                <h3>技术要点回顾：</h3>
+                <ul>
+                    <li><span class="emoji">🔢</span><strong>NumPy数组：</strong> 创建、操作、分析一体化</li>
+                    <li><span class="emoji">📊</span><strong>数据可视化：</strong> Matplotlib面向对象编程</li>
+                    <li><span class="emoji">🛠️</span><strong>工具开发：</strong> 自定义统计分析函数库</li>
+                    <li><span class="emoji">🔄</span><strong>完整流程：</strong> 从业务理解到结果呈现</li>
+                </ul>
+
+                <h3>下期预告：</h3>
+                <ul>
+                    <li><span class="emoji">🔜</span>Chapter 3: Pandas数据处理进阶</li>
+                    <li><span class="emoji">🔜</span>Chapter 4: 机器学习基础与实践</li>
+                </ul>
+            </div>
+            
+            <p style="margin-top: 30px; font-style: italic; color: #7f8c8d;">
+                <em>注：本PPT基于Chapter02目录下所有notebook和代码文件内容整理而成</em>
+            </p>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="changeSlide(-1)">◀ 上一页</button>
+        <button class="nav-btn" onclick="changeSlide(1)">下一页 ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            document.getElementById('progressBar').style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        // 键盘导航
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        
+        // 初始化进度条
+        document.getElementById('progressBar').style.width = `${(1 / totalSlides) * 100}%`;
+    </script>
+</body>
+</html>
